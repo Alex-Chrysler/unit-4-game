@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+</head>
+<body>
+        <style type="text/css">
+
+body { 
+    
+    background-image: url("https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/3/39/Game_map_7.15.png/300px-Game_map_7.15.png?version=a2eb056a6fba994118cf0552a7a09fc5");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+h1 {
+  color:white
+}
+
+h2 {
+  color: white;
+  background-color: grey;
+}
+
+            .crystal-image {
+              width: 300px;
+              height: 300px;
+              margin: 30px;
+            }
+          </style>
+        
+
+<h1>Gold for Next Item: <span id="number-to-guess"></span></h1>
+<h1>Current Gold: <span id="current-number"></span></h1>
+
+<div id="crystals">
+    </div>
+
+<h2>You need to farm for your next item. Farm the correct amount of gold by clicking the creep kill icons. Each icon has a random gold value. Careful not to farm too much and go over your needed gold or the other team may push for the win.</h2>
+
+
+
+
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+
+
+
+var targetNumber = Math.ceil((Math.random() * 101) + 19);
+
+  $("#number-to-guess").text(targetNumber);
+
+var counter = 0;
+
+var numberOptions = []
+
+ 
+function resetGame () {
+  targetNumber = Math.floor((Math.random() * 101) +19)
+  $("#number-to-guess").text(targetNumber);
+  counter = 0
+  $("#current-number").text(counter)
+}
+
+for (var i=0; i< 4; i++) {
+  numberOptions.push(Math.ceil((Math.random() * 12) + 1))
+}
+
+for (var i = 0; i < 4; i++) {
+  
+    var imageCrystal = $("<img>");
+    imageCrystal.addClass("crystal-image");
+    imageCrystal.attr("src", "http://www.it-support.com.au/wp-content/uploads/2014/09/lasthitting.gif");
+    imageCrystal.attr("data-crystalvalue", numberOptions[i]);
+    $("#crystals").append(imageCrystal);
+  }
+
+
+$(".crystal-image").on("click", function() {
+    var crystalValue = ($(this).attr("data-crystalvalue"));
+    crystalValue = parseInt(crystalValue);
+    counter += crystalValue;
+    $("#current-number").text(counter);
+    console.log(counter)
+    if (counter === targetNumber) {
+        alert("You carried your team to victory");
+        resetGame ()
+      }
+  
+      else if (counter >= targetNumber) {
+        alert("You farmed too hard and they pushed your racks. You lose");
+        resetGame ()  
+      }
+  
+    });
+
+
+</script>
+
+
+
+
+    
+</body>
+</html>
